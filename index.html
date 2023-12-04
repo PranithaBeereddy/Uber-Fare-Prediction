@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uber Fare Prediction</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="content-box">
+        <h1>Uber Fare Prediction</h1>
+
+        <div id="date-month-year">
+            <label for="month">Month:</label>
+            <select id="month" onchange="updateDays()">
+                <option value="" disabled selected>Select Month</option>
+                <!-- Static options for months -->
+                <option value="1">January</option>
+                <option value="2">February</option>
+                <option value="3">March</option>
+                <option value="4">April</option>
+                <option value="5">May</option>
+                <option value="6">June</option>
+                <option value="7">July</option>
+                <option value="8">August</option>
+                <option value="9">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+            </select>
+
+            <label for="year">Year:</label>
+            <select id="year">
+                <option value="" disabled selected>Select Year</option>
+                <!-- Static options for years -->
+                <option value="2009">2009</option>
+                <option value="2010">2010</option>
+                <option value="2011">2011</option>
+                <option value="2012">2012</option>
+                <option value="2013">2013</option>
+                <option value="2014">2014</option>
+                <option value="2015">2015</option>
+            </select>
+
+            <label for="date">Date:</label>
+            <select id="date">
+                <option value="" disabled selected>Select Date</option>
+                <!-- Options for days will be dynamically added using JavaScript -->
+            </select>
+        </div>
+
+        <div id="time-box">
+            <div class="time-select">
+                <label for="Hour">Hour:</label>
+                <select id="Hour">
+                    <!-- Options for hours -->
+                </select>
+            </div>
+            <div class="time-select">
+                <label for="Minute">Minute:</label>
+                <select id="Minute">
+                    <!-- Options for minutes -->
+                </select>
+            </div>
+            <div class="time-select">
+                <label for="Second">Second:</label>
+                <select id="Second">
+                    <!-- Options for seconds -->
+                </select>
+            </div>
+        </div>
+
+        <div id="output-boxes" class="flex-container">
+            <div class="input-group">
+                <label for="pickupLongitude">Pickup Longitude:</label>
+                <input type="text" id="pickupLongitude" readonly>
+            </div>
+
+            <div class="input-group">
+                <label for="pickupLatitude">Pickup Latitude:</label>
+                <input type="text" id="pickupLatitude" readonly>
+            </div>
+        </div>
+
+        <div id="dropoff-boxes" class="flex-container">
+            <div class="input-group">
+                <label for="dropoffLongitude">Dropoff Longitude:</label>
+                <input type="text" id="dropoffLongitude" readonly>
+            </div>
+
+            <div class="input-group">
+                <label for="dropoffLatitude">Dropoff Latitude:</label>
+                <input type="text" id="dropoffLatitude" readonly>
+            </div>
+        </div>
+
+        <div id="predicted-price">
+            <label for="predictedPrice">Predicted Uber Price: -------------------</label>
+            
+        </div>
+
+        <div id="predict-button">
+            <button onclick="calculatePrice()">Calculate Price</button>
+        </div>
+    </div>
+
+    <script>
+        function updateDays() {
+            var monthSelect = document.getElementById("month");
+            var dateSelect = document.getElementById("date");
+
+            // Clear existing options
+            dateSelect.innerHTML = '';
+
+            // Get the selected month
+            var selectedMonth = parseInt(monthSelect.value, 10);
+
+            // Determine the number of days in the selected month
+            var daysInMonth = new Date(
+                document.getElementById("year").value,
+                selectedMonth,
+                0
+            ).getDate();
+
+            // Populate days based on the number of days in the month
+            for (var i = 1; i <= daysInMonth; i++) {
+                var option = document.createElement("option");
+                option.value = i;
+                option.text = i;
+                dateSelect.add(option);
+            }
+        }
+
+        function populateOptions(selectId, start, end) {
+            var selectElement = document.getElementById(selectId);
+
+            // Clear existing options
+            selectElement.innerHTML = '';
+
+            // Populate options
+            for (var i = start; i <= end; i++) {
+                var option = document.createElement("option");
+                option.value = i;
+                option.text = i < 10 ? '0' + i : i; // Add leading zero if necessary
+                selectElement.add(option);
+            }
+        }
+
+        // Populate options for hours, minutes, and seconds
+        populateOptions("Hour", 1, 12);
+        populateOptions("Minute", 0, 59);
+        populateOptions("Second", 0, 59);
+
+        function calculatePrice() {
+            // Implement your price calculation logic here
+            // Update the values in the output boxes accordingly
+        }
+    </script>
+
+</body>
+</html>
